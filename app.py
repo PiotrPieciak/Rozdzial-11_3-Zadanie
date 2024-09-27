@@ -32,7 +32,7 @@ class db:
     @staticmethod
     def transation_init():
         transactions = pd.DataFrame()
-        src = r"db/transactions"
+        src = r"db\transactions"
         for filename in os.listdir(src):
             transactions = transactions._append(pd.read_csv(os.path.join(src,filename),index_col=0))
 
@@ -127,8 +127,9 @@ def tab2_barh_prod_subcat(chosen_cat):
 def tab3_bar_chanel(start_date,end_date):
 
     truncated = df.merged[(df.merged['tran_date']>=start_date)&(df.merged['tran_date']<=end_date)]
-    truncated['tran_date'] = truncated['tran_date'].dt.day_name()
+    truncated['tran_date'] = truncated['tran_date'].dt.weekday 
     grouped = truncated[truncated['total_amt']>0].groupby([pd.Grouper(key='tran_date'),'Store_type'])['total_amt'].sum().round(2).unstack()
+    grouped.index = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 
     traces = []
     for col in grouped.columns:
