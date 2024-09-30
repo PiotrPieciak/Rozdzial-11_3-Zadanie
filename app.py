@@ -129,7 +129,7 @@ def tab3_bar_chanel(start_date,end_date):
     truncated = df.merged[(df.merged['tran_date']>=start_date)&(df.merged['tran_date']<=end_date)]
     truncated['tran_date'] = truncated['tran_date'].dt.weekday
     grouped = truncated[truncated['total_amt']>0].groupby([pd.Grouper(key='tran_date'),'Store_type'])['total_amt'].sum().round(2).unstack()
-    dict_week = dict(zip([0,1,2,3,4,5,6],['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']))
+    dict_week = dict(enumerate(['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']))
     grouped.index = grouped.index.map(dict_week)
 
 
